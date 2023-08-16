@@ -1,7 +1,11 @@
+
+# ignore ALL files in ANY directory named temp
+
 # ignore ALL .log files
 *.log
 *.pyc
 *.csv
 
 # ignore ALL files in ANY directory named temp
+
 temp/
