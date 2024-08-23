@@ -21,4 +21,4 @@ python nonstandardcode.py
 1. Create required Anaconda environment conda create --name environmentName python=3 pandas numpy. Include all your dependencies at once while creating the environment.
 2. Switch to the environment with conda activate environmentName.
 3. Executing the python script python fileName.py. You don't have to specify the python version because the script is running inside the Anaconda environment. The version used will be whatever is specified in the environment (the script required python3 which has already been specified in Anaconda environment).
-   
+
