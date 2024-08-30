@@ -1,0 +1,8 @@
+setting.json
+{
+    "python.pythonPath": "your/python/path",
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.sortImports.args": ["--profile", "black"]
+  }
