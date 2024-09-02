@@ -1,19 +1,19 @@
+import numpy as np  # type: ignore
 import os
+import pandas as pd  # type: ignore
 import tarfile
-import pandas as pd
-import numpy as np
-from six.moves import urllib
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import StratifiedShuffleSplit
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.tree import DecisionTreeRegressor
-from scipy.stats import randint
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.model_selection import GridSearchCV
+from six.moves import urllib  # type: ignore
+from sklearn.model_selection import train_test_split  # type: ignore
+from sklearn.model_selection import StratifiedShuffleSplit  # type: ignore
+from sklearn.impute import SimpleImputer  # type: ignore
+from sklearn.linear_model import LinearRegression  # type: ignore
+from sklearn.metrics import mean_squared_error  # type: ignore
+from sklearn.metrics import mean_absolute_error  # type: ignore
+from sklearn.tree import DecisionTreeRegressor  # type: ignore
+from scipy.stats import randint  # type: ignore
+from sklearn.ensemble import RandomForestRegressor  # type: ignore
+from sklearn.model_selection import RandomizedSearchCV  # type: ignore
+from sklearn.model_selection import GridSearchCV  # type: ignore
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
