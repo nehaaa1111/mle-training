@@ -12,7 +12,7 @@ class TestIncomeCatProportions(unittest.TestCase):
     def setUp(self):
         """Set up a simple DataFrame for testing."""
         self.data = pd.DataFrame({
-            "income_cat": 
+            "income_cat":
             ["high", "medium", "high", "low",
                 "medium", "medium", "low", "high"]
         })
