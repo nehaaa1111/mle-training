@@ -1,0 +1,2 @@
+[console_scripts]
+mycli = src.mymodule:main_function
