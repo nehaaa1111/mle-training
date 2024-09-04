@@ -1,46 +1,28 @@
-# tests/test_nonstandardcode.py
+from setuptools import setup, find_packages
 
-import unittest
-import pandas as pd
-from src.nonstandardcode import fetch_housing_data
-from src.nonstandardcode import load_housing_data, prepare_data, train_model
+setup(
+    name="MLE-TRAINING",
+    version="0.1.0",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    install_requires=[
+        "bottleneck==1.3.7",
+        "joblib==1.4.2",
+        "numexpr==2.8.7",
+        "numpy==1.26.4",
+        "pandas==2.2.2",
+        "python-dateutil==2.9.0",
+        "pytz==2024.1",
+        "scikit-learn==1.5.1",
+        "scipy==1.13.1",
+        "six==1.16.0",
+        "threadpoolctl==3.5.0",
+    ],
+    entry_points={
+        "console_scripts": [
+            # Create command-line tools here if needed
+            'mycli=src.mymodule:main_function',
+        ],
+    },
+)
 
-
-class TestHousingData(unittest.TestCase):
-
-    def setUp(self):
-        # Create a small mock dataset
-        data = {
-            'median_income': [1.0, 2.0, 3.0, 4.0, 5.0],
-            'total_rooms': [1000, 1500, 2000, 2500, 3000],
-            'households': [300, 400, 500, 600, 700],
-            'total_bedrooms': [200, 300, 400, 500, 600],
-            'population': [800, 900, 1000, 1100, 1200],
-            'ocean_proximity': ['NEAR BAY', 'INLAND', 'NEAR OCEAN',
-                                'ISLAND', 'NEAR BAY']
-        }
-        self.housing = pd.DataFrame(data)
-        self.train_set, self.test_set = prepare_data(self.housing)
-
-    def test_load_data(self):
-        # Test if the data loading works
-        fetch_housing_data()
-        data = load_housing_data()
-        self.assertIsInstance(data, pd.DataFrame)
-
-    def test_prepare_data(self):
-        # Test if data preparation works
-        self.assertEqual(len(self.train_set), 4)  # Example
-        self.assertEqual(len(self.test_set), 1)   # Example
-
-    def test_train_model(self):
-        # Test if the model training works
-        housing_prepared = self.train_set.drop("median_house_value", axis=1)
-        housing_labels = self.train_set["median_house_value"].copy()
-        lin_rmse, lin_mae = train_model(housing_prepared, housing_labels)
-        self.assertIsInstance(lin_rmse, float)
-        self.assertIsInstance(lin_mae, float)
-
-
-if __name__ == '__main__':
-    unittest.main()
