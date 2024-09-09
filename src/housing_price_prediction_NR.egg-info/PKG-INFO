@@ -1,5 +1,5 @@
 Metadata-Version: 2.1
-Name: hpp
+Name: housing-price-prediction-NR
 Version: 0.1.0
 Summary: A package for predicting housing prices using machine learning models
 Home-page: https://github.com/nehaaa1111/mle-training
@@ -10,12 +10,6 @@ Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
-Requires-Dist: matplotlib>=3.0
-Requires-Dist: numpy>=1.19
-Requires-Dist: pandas>=1.0
-Requires-Dist: scikit-learn>=0.24
-Requires-Dist: scipy>=1.5
-Requires-Dist: six>=1.15
 
 # Median housing value prediction
 

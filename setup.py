@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="hpp",  # Name of the package
+    name="housing_price_prediction_NR",  # Name of the package
     version="0.1.0",  # Version of the package
     author="Neha Rawat",  # Author name
     author_email="neha.rawat@tigeranalytics.com",  # Author's email
@@ -31,7 +31,7 @@ setup(
     ],
     entry_points={  # For command-line tools if needed
         "console_scripts": [
-            "hpp=src.ingest_data:main",  # Define a script entry point
+            "housing_price_predictor=src.ingest_data:main",  # Define a script entry point
         ],
     },
 )

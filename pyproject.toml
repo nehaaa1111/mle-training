@@ -8,3 +8,7 @@ target-version = ['py38']
 profile = "black"
 line_length = 88
 known_third_party = ["your_third_party_libraries"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
