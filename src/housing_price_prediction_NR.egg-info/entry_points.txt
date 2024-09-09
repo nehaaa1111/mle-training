@@ -1,2 +1,0 @@
-[console_scripts]
-housing_price_predictor = src.ingest_data:main

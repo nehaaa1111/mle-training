@@ -5,7 +5,6 @@ setup.py
 src/housing_price_prediction_NR.egg-info/PKG-INFO
 src/housing_price_prediction_NR.egg-info/SOURCES.txt
 src/housing_price_prediction_NR.egg-info/dependency_links.txt
-src/housing_price_prediction_NR.egg-info/entry_points.txt
 src/housing_price_prediction_NR.egg-info/requires.txt
 src/housing_price_prediction_NR.egg-info/top_level.txt
 tests/test_module1.py
