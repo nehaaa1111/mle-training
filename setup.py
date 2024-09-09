@@ -1,27 +1,37 @@
 from setuptools import setup, find_packages
 
+# Read the contents of the README file
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
-    name="MLE-TRAINING",
-    version="0.1.0",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
-    install_requires=[
-        "bottleneck==1.3.7",
-        "joblib==1.4.2",
-        "numexpr==2.8.7",
-        "numpy==1.26.4",
-        "pandas==2.2.2",
-        "python-dateutil==2.9.0",
-        "pytz==2024.1",
-        "scikit-learn==1.5.1",
-        "scipy==1.13.1",
-        "six==1.16.0",
-        "threadpoolctl==3.5.0",
+    name="hpp",  # Name of the package
+    version="0.1.0",  # Version of the package
+    author="Neha Rawat",  # Author name
+    author_email="neha.rawat@tigeranalytics.com",  # Author's email
+    description="A package for predicting housing prices using machine learning models",  # Short description
+    long_description=long_description,  # Long description from README
+    long_description_content_type="text/markdown",  # Format of long description
+    url="https://github.com/nehaaa1111/mle-training",  # URL to the repository (or website)
+    packages=find_packages(where="src"),  # Automatically find packages in the src directory
+    package_dir={"": "src"},  # Specify the directory where the code is located
+    classifiers=[  # Metadata classifiers
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
-    entry_points={
+    python_requires=">=3.7",  # Minimum Python version required
+    install_requires=[  # External dependencies
+        "matplotlib>=3.0",
+        "numpy>=1.19",
+        "pandas>=1.0",
+        "scikit-learn>=0.24",
+        "scipy>=1.5",
+        "six>=1.15",
+    ],
+    entry_points={  # For command-line tools if needed
         "console_scripts": [
-            # Create command-line tools here if needed
-            'mycli=src.mymodule:main_function',
+            "hpp=src.ingest_data:main",  # Define a script entry point
         ],
     },
 )

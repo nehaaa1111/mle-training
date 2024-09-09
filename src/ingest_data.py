@@ -24,9 +24,10 @@ Functions
 Usage
 -----
 1. Run the script from the command line with the necessary arguments:
-   
+
    ```bash
-   python ingest_data.py --output_path <output_directory> --log_level INFO --log_file ingest_data.log --console
+   python ingest_data.py --output_path <output_directory> --log_level INFO
+     --log_file ingest_data.log --console
 """
 
 import os

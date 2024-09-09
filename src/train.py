@@ -70,9 +70,9 @@ def save_model(model, output_path):
     joblib.dump(model, model_file)
     logging.info(f"Model saved to {model_file}")
 
+
 def main(input_path, output_path, log_level, log_file, console):
     setup_logging(log_level, log_file, console)
-
     train_data = load_data(input_path)
     model = train_model(train_data)
     save_model(model, output_path)
