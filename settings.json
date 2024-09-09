@@ -1,8 +1,12 @@
-setting.json
 {
-    "python.pythonPath": "your/python/path",
-    "editor.formatOnSave": true,
-    "python.formatting.provider": "black",
-    "python.linting.flake8Enabled": true,
-    "python.sortImports.args": ["--profile", "black"]
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "editor.formatOnSave": true,
+  "python.defaultInterpreterPath": "/c/Users/neha.rawat/AppData/Local/Microsoft/WindowsApps/python3",
+  "python.formatting.provider": "black",
+  "[python]": {
+      "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+      }
   }
+}

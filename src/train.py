@@ -87,3 +87,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     main(args.input_path, args.output_path, args.log_level, args.log_file, args.console)
+    

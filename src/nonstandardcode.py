@@ -1,106 +1,31 @@
-"""
-Housing Price Prediction Script.
-
-This script performs data ingestion, preparation, and training of various machine learning models 
-to predict housing prices. It includes functions for fetching and loading data, processing features, 
-and training models such as Decision Trees, Linear Regression, and Random Forests. Additionally, it 
-implements hyperparameter tuning using GridSearchCV and RandomizedSearchCV for the Random Forest model.
-
-Modules
--------
-- `matplotlib.pyplot`: For plotting data visualizations.
-- `numpy`: For numerical operations.
-- `os`: For file and directory operations.
-- `pandas`: For data manipulation and analysis.
-- `tarfile`: For handling compressed tar archives.
-- `scipy.stats`: For statistical distributions.
-- `six.moves.urllib`: For downloading data from the internet.
-- `sklearn`: For machine learning models and utilities.
-- `RandomForestRegressor`, `LinearRegression`, `DecisionTreeRegressor`: Regressors used for predicting house prices.
-- `train_test_split`, `StratifiedShuffleSplit`: For splitting data into training and test sets.
-- `SimpleImputer`: For handling missing data.
-- `GridSearchCV`, `RandomizedSearchCV`: For hyperparameter tuning of models.
-- `mean_squared_error`, `mean_absolute_error`: For evaluating model performance.
-
-Functions
----------
-- `sum(a, b)`: Simple sum of two numbers.
-- `fetch_housing_data(housing_url, housing_path)`: Downloads and extracts housing data from the given URL.
-- `load_housing_data(housing_path)`: Loads housing data from the specified path.
-- `income_cat_proportions(data)`: Calculates the income category proportions for stratified sampling.
-- Various inline procedures for splitting datasets, preprocessing, and evaluating models.
-
-Data Pipeline
--------------
-1. Download and extract housing data.
-2. Preprocess the data (feature scaling, handling missing values, and encoding categorical features).
-3. Split the data into training and test sets using stratified sampling.
-4. Train and evaluate machine learning models including:
-   - Linear Regression
-   - Decision Tree Regressor
-   - Random Forest Regressor
-5. Perform hyperparameter tuning using GridSearchCV and RandomizedSearchCV for the Random Forest model.
-6. Evaluate the final model on the test set.
-
-Usage Example
--------------
-1. Fetch the data by calling `fetch_housing_data()`.
-2. Load the data using `load_housing_data()`.
-3. Preprocess the data for training.
-4. Train models and tune hyperparameters using the defined pipeline.
-5. Evaluate the performance on the test set.
-
-Attributes
-----------
-- `DOWNLOAD_ROOT`: URL for the dataset.
-- `HOUSING_PATH`: Local directory path where the dataset is stored.
-- `HOUSING_URL`: Full URL to the compressed dataset.
-"""
-import matplotlib.pyplot as plt
-import numpy as np  # type: ignore
 import os
-import pandas as pd  # type: ignore
 import tarfile
 
-from scipy.stats import randint  # type: ignore
-from six.moves import urllib  # type: ignore
-from sklearn.ensemble import RandomForestRegressor  # type: ignore
-from sklearn.impute import SimpleImputer  # type: ignore
-from sklearn.linear_model import LinearRegression  # type: ignore
-from sklearn.metrics import mean_absolute_error  # type: ignore
-from sklearn.metrics import mean_squared_error  # type: ignore
-from sklearn.model_selection import GridSearchCV  # type: ignore
-from sklearn.model_selection import RandomizedSearchCV  # type: ignore
-from sklearn.model_selection import StratifiedShuffleSplit  # type: ignore
-from sklearn.model_selection import train_test_split  # type: ignore
-from sklearn.tree import DecisionTreeRegressor  # type: ignore
+import matplotlib as mpl  # noqa
+import matplotlib.pyplot as plt  # noqa
+import numpy as np
+import pandas as pd
+from scipy.stats import randint
+from six import urllib
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.model_selection import (
+    GridSearchCV,
+    RandomizedSearchCV,
+    StratifiedShuffleSplit,
+    train_test_split,
+)
+from sklearn.tree import DecisionTreeRegressor
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
 HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
 
-def sum(a, b):
-    return a + b
-
-
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
-    """
-    Download and extract the housing dataset from the specified URL.
-
-    Parameters
-    ----------
-    housing_url : str
-        URL of the dataset to be downloaded.
-    housing_path : str
-        Local path where the dataset should be saved.
-
-    Returns
-    -------
-    None
-    """
-    if not os.path.isdir(housing_path):
-        os.makedirs(housing_path, exist_ok=True)
+    os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, "housing.tgz")
     urllib.request.urlretrieve(housing_url, tgz_path)
     housing_tgz = tarfile.open(tgz_path)
@@ -109,33 +34,12 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
 
 
 def load_housing_data(housing_path=HOUSING_PATH):
-    """
-    Load the housing data from a CSV file into a pandas DataFrame.
-
-    Parameters
-    ----------
-    housing_path : str
-        Path to the directory containing the `housing.csv` file.
-
-    Returns
-    -------
-    pandas.DataFrame
-        The loaded housing dataset.
-    """
     csv_path = os.path.join(housing_path, "housing.csv")
     return pd.read_csv(csv_path)
 
 
-# housing = load_housing_data()
+housing = load_housing_data
 
-current_dir = os.path.dirname(__file__)
-
-# Construct the relative path to the dataset
-dataset_path = os.path.join(current_dir, '..', 'data', 'housing.csv')
-
-# Load the dataset using pandas
-housing = pd.read_csv(dataset_path)
-print(dataset_path)
 
 train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)
 
@@ -145,6 +49,7 @@ housing["income_cat"] = pd.cut(
     labels=[1, 2, 3, 4, 5],
 )
 
+
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
 for train_index, test_index in split.split(housing, housing["income_cat"]):
     strat_train_set = housing.loc[train_index]
@@ -152,19 +57,6 @@ for train_index, test_index in split.split(housing, housing["income_cat"]):
 
 
 def income_cat_proportions(data):
-    """
-    Calculate the proportions of each income category in the dataset.
-
-    Parameters
-    ----------
-    data : pandas.DataFrame
-        The dataset containing the income category.
-
-    Returns
-    -------
-    pandas.Series
-        Proportions of each income category in the dataset.
-    """
     return data["income_cat"].value_counts() / len(data)
 
 
@@ -193,16 +85,9 @@ housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
 
 corr_matrix = housing.corr()
 corr_matrix["median_house_value"].sort_values(ascending=False)
-housing["rooms_per_household"] = (
-    housing["total_rooms"] / housing["households"]
-)
-housing["bedrooms_per_room"] = (
-    housing["total_bedrooms"] / housing["total_rooms"]
-)
-housing["population_per_household"] = (
-    housing["population"] / housing["households"]
-)
-
+housing["rooms_per_household"] = housing["total_rooms"] / housing["households"]
+housing["bedrooms_per_room"] = housing["total_bedrooms"] / housing["total_rooms"]
+housing["population_per_household"] = housing["population"] / housing["households"]
 housing = strat_train_set.drop(
     "median_house_value", axis=1
 )  # drop labels for training set
@@ -213,17 +98,10 @@ imputer = SimpleImputer(strategy="median")
 housing_num = housing.drop("ocean_proximity", axis=1)
 
 imputer.fit(housing_num)
-X = imputer.transform(
-    housing_num
-)
+X = imputer.transform(housing_num)
 
-housing_tr = pd.DataFrame(X,
-                          columns=housing_num.columns,
-                          index=housing.index
-                          )
-housing_tr["rooms_per_household"] = (
-    housing_tr["total_rooms"] / housing_tr["households"]
-)
+housing_tr = pd.DataFrame(X, columns=housing_num.columns, index=housing.index)
+housing_tr["rooms_per_household"] = housing_tr["total_rooms"] / housing_tr["households"]
 housing_tr["bedrooms_per_room"] = (
     housing_tr["total_bedrooms"] / housing_tr["total_rooms"]
 )
@@ -232,9 +110,8 @@ housing_tr["population_per_household"] = (
 )
 
 housing_cat = housing[["ocean_proximity"]]
-housing_prepared = housing_tr.join(
-    pd.get_dummies(housing_cat, drop_first=True)
-    )
+housing_prepared = housing_tr.join(pd.get_dummies(housing_cat, drop_first=True))
+
 
 lin_reg = LinearRegression()
 lin_reg.fit(housing_prepared, housing_labels)
@@ -244,8 +121,10 @@ lin_mse = mean_squared_error(housing_labels, housing_predictions)
 lin_rmse = np.sqrt(lin_mse)
 lin_rmse
 
+
 lin_mae = mean_absolute_error(housing_labels, housing_predictions)
 lin_mae
+
 
 tree_reg = DecisionTreeRegressor(random_state=42)
 tree_reg.fit(housing_prepared, housing_labels)
@@ -254,6 +133,7 @@ housing_predictions = tree_reg.predict(housing_prepared)
 tree_mse = mean_squared_error(housing_labels, housing_predictions)
 tree_rmse = np.sqrt(tree_mse)
 tree_rmse
+
 
 param_distribs = {
     "n_estimators": randint(low=1, high=200),
@@ -273,6 +153,7 @@ rnd_search.fit(housing_prepared, housing_labels)
 cvres = rnd_search.cv_results_
 for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
     print(np.sqrt(-mean_score), params)
+
 
 param_grid = [
     # try 12 (3×4) combinations of hyperparameters
@@ -322,9 +203,7 @@ X_test_prepared["population_per_household"] = (
 )
 
 X_test_cat = X_test[["ocean_proximity"]]
-X_test_prepared = X_test_prepared.join(
-    pd.get_dummies(X_test_cat, drop_first=True)
-    )
+X_test_prepared = X_test_prepared.join(pd.get_dummies(X_test_cat, drop_first=True))
 
 
 final_predictions = final_model.predict(X_test_prepared)

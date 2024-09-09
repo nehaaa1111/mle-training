@@ -29,9 +29,9 @@ setup(
         "scipy>=1.5",
         "six>=1.15",
     ],
-    entry_points={  # For command-line tools if needed
-        "console_scripts": [
-            "housing_price_predictor=src.ingest_data:main",  # Define a script entry point
-        ],
-    },
+    # entry_points={  # For command-line tools if needed
+    #     "console_scripts": [
+    #         "housing_price_predictor=src.ingest_data:main",  # Define a script entry point
+    #     ],
+    # },
 )

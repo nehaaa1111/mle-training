@@ -105,3 +105,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     main(args.model_path, args.dataset_path, args.output_path, args.log_level, args.log_file, args.console)
+    
