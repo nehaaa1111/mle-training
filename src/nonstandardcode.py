@@ -1,9 +1,67 @@
+"""
+Housing Price Prediction Script.
 
+This script performs data ingestion, preparation, and training of various machine learning models 
+to predict housing prices. It includes functions for fetching and loading data, processing features, 
+and training models such as Decision Trees, Linear Regression, and Random Forests. Additionally, it 
+implements hyperparameter tuning using GridSearchCV and RandomizedSearchCV for the Random Forest model.
+
+Modules
+-------
+- `matplotlib.pyplot`: For plotting data visualizations.
+- `numpy`: For numerical operations.
+- `os`: For file and directory operations.
+- `pandas`: For data manipulation and analysis.
+- `tarfile`: For handling compressed tar archives.
+- `scipy.stats`: For statistical distributions.
+- `six.moves.urllib`: For downloading data from the internet.
+- `sklearn`: For machine learning models and utilities.
+- `RandomForestRegressor`, `LinearRegression`, `DecisionTreeRegressor`: Regressors used for predicting house prices.
+- `train_test_split`, `StratifiedShuffleSplit`: For splitting data into training and test sets.
+- `SimpleImputer`: For handling missing data.
+- `GridSearchCV`, `RandomizedSearchCV`: For hyperparameter tuning of models.
+- `mean_squared_error`, `mean_absolute_error`: For evaluating model performance.
+
+Functions
+---------
+- `sum(a, b)`: Simple sum of two numbers.
+- `fetch_housing_data(housing_url, housing_path)`: Downloads and extracts housing data from the given URL.
+- `load_housing_data(housing_path)`: Loads housing data from the specified path.
+- `income_cat_proportions(data)`: Calculates the income category proportions for stratified sampling.
+- Various inline procedures for splitting datasets, preprocessing, and evaluating models.
+
+Data Pipeline
+-------------
+1. Download and extract housing data.
+2. Preprocess the data (feature scaling, handling missing values, and encoding categorical features).
+3. Split the data into training and test sets using stratified sampling.
+4. Train and evaluate machine learning models including:
+   - Linear Regression
+   - Decision Tree Regressor
+   - Random Forest Regressor
+5. Perform hyperparameter tuning using GridSearchCV and RandomizedSearchCV for the Random Forest model.
+6. Evaluate the final model on the test set.
+
+Usage Example
+-------------
+1. Fetch the data by calling `fetch_housing_data()`.
+2. Load the data using `load_housing_data()`.
+3. Preprocess the data for training.
+4. Train models and tune hyperparameters using the defined pipeline.
+5. Evaluate the performance on the test set.
+
+Attributes
+----------
+- `DOWNLOAD_ROOT`: URL for the dataset.
+- `HOUSING_PATH`: Local directory path where the dataset is stored.
+- `HOUSING_URL`: Full URL to the compressed dataset.
+"""
 import matplotlib.pyplot as plt
-import os
-import tarfile
 import numpy as np  # type: ignore
+import os
 import pandas as pd  # type: ignore
+import tarfile
+
 from scipy.stats import randint  # type: ignore
 from six.moves import urllib  # type: ignore
 from sklearn.ensemble import RandomForestRegressor  # type: ignore
@@ -17,28 +75,55 @@ from sklearn.model_selection import StratifiedShuffleSplit  # type: ignore
 from sklearn.model_selection import train_test_split  # type: ignore
 from sklearn.tree import DecisionTreeRegressor  # type: ignore
 
-# DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
-# HOUSING_PATH = os.path.join("datasets", "housing")
-# HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
+DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
+HOUSING_PATH = os.path.join("datasets", "housing")
+HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
 
 def sum(a, b):
     return a + b
 
 
-# def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
-#     if not os.path.isdir(housing_path):
-#         os.makedirs(housing_path, exist_ok=True)
-#     tgz_path = os.path.join(housing_path, "housing.tgz")
-#     urllib.request.urlretrieve(housing_url, tgz_path)
-#     housing_tgz = tarfile.open(tgz_path)
-#     housing_tgz.extractall(path=housing_path)
-#     housing_tgz.close()
+def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
+    """
+    Download and extract the housing dataset from the specified URL.
+
+    Parameters
+    ----------
+    housing_url : str
+        URL of the dataset to be downloaded.
+    housing_path : str
+        Local path where the dataset should be saved.
+
+    Returns
+    -------
+    None
+    """
+    if not os.path.isdir(housing_path):
+        os.makedirs(housing_path, exist_ok=True)
+    tgz_path = os.path.join(housing_path, "housing.tgz")
+    urllib.request.urlretrieve(housing_url, tgz_path)
+    housing_tgz = tarfile.open(tgz_path)
+    housing_tgz.extractall(path=housing_path)
+    housing_tgz.close()
 
 
-# def load_housing_data(housing_path=HOUSING_PATH):
-#     csv_path = os.path.join(housing_path, "housing.csv")
-#     return pd.read_csv(csv_path)
+def load_housing_data(housing_path=HOUSING_PATH):
+    """
+    Load the housing data from a CSV file into a pandas DataFrame.
+
+    Parameters
+    ----------
+    housing_path : str
+        Path to the directory containing the `housing.csv` file.
+
+    Returns
+    -------
+    pandas.DataFrame
+        The loaded housing dataset.
+    """
+    csv_path = os.path.join(housing_path, "housing.csv")
+    return pd.read_csv(csv_path)
 
 
 # housing = load_housing_data()
@@ -67,6 +152,19 @@ for train_index, test_index in split.split(housing, housing["income_cat"]):
 
 
 def income_cat_proportions(data):
+    """
+    Calculate the proportions of each income category in the dataset.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        The dataset containing the income category.
+
+    Returns
+    -------
+    pandas.Series
+        Proportions of each income category in the dataset.
+    """
     return data["income_cat"].value_counts() / len(data)
 
 

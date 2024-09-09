@@ -1,3 +1,34 @@
+"""
+Data Ingestion Script for Housing Dataset.
+
+This script downloads, processes, and splits the housing dataset into training and validation sets, 
+and saves them to the specified output path. It also provides logging capabilities to track the 
+progress of the ingestion process.
+
+Modules
+-------
+- `os`: For file and directory operations.
+- `pandas`: For data manipulation and analysis.
+- `sklearn.model_selection`: For splitting data into training and validation sets.
+- `argparse`: For parsing command-line arguments.
+- `logging`: For logging information to a file or console.
+
+Functions
+---------
+- `setup_logging(log_level, log_file, console)`: Configures logging for the script.
+- `fetch_housing_data(housing_url, housing_path)`: Downloads and extracts the housing dataset from the specified URL.
+- `load_housing_data(housing_path)`: Loads the housing data from a CSV file.
+- `save_data(data, output_path, file_name)`: Saves a pandas DataFrame to a CSV file.
+- `main(output_path, log_level, log_file, console)`: The main entry point of the script that orchestrates the data ingestion process.
+
+Usage
+-----
+1. Run the script from the command line with the necessary arguments:
+   
+   ```bash
+   python ingest_data.py --output_path <output_directory> --log_level INFO --log_file ingest_data.log --console
+"""
+
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split

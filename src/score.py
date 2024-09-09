@@ -7,6 +7,14 @@ import argparse
 import logging
 
 def setup_logging(log_level, log_file, console):
+    """
+    Set up logging configuration.
+
+    Parameters:
+    - log_level (str): The logging level (e.g., 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL').
+    - log_file (str): Path to the log file.
+    - console (bool): If True, enable console logging.
+    """
     log_format = "%(asctime)s - %(levelname)s - %(message)s"
     logging.basicConfig(level=log_level, format=log_format, filename=log_file, filemode='w')
 
@@ -17,14 +25,42 @@ def setup_logging(log_level, log_file, console):
         logging.getLogger().addHandler(console_handler)
 
 def load_model(model_path):
+    """
+    Load a model from a file.
+
+    Parameters:
+    - model_path (str): Path to the model file.
+
+    Returns:
+    - model: The loaded model.
+    """
     logging.info(f"Loading model from {model_path}")
     return joblib.load(model_path)
 
 def load_data(file_path):
+    """
+    Load data from a CSV file.
+
+    Parameters:
+    - file_path (str): Path to the CSV file.
+
+    Returns:
+    - pd.DataFrame: The loaded dataset.
+    """
     logging.info(f"Loading data from {file_path}")
     return pd.read_csv(file_path)
 
 def score_model(model, data):
+    """
+    Score the model using the provided data and compute RMSE.
+
+    Parameters:
+    - model: The model to be evaluated.
+    - data (pd.DataFrame): The dataset for scoring, which must include 'median_house_value' column.
+
+    Returns:
+    - float: The RMSE (Root Mean Squared Error) of the model.
+    """
     logging.info("Scoring model...")
     X = data.drop("median_house_value", axis=1)
     y = data["median_house_value"].copy()
@@ -37,6 +73,16 @@ def score_model(model, data):
     return rmse
 
 def main(model_path, dataset_path, output_path, log_level, log_file, console):
+     """
+    Main function to execute the script.
+    Parameters:
+    - model_path (str): Path to the model file.
+    - dataset_path (str): Path to the validation dataset.
+    - output_path (str): Path to the folder where the score will be saved.
+    - log_level (str): The logging level (e.g., 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL').
+    - log_file (str): Path to the log file.
+    - console (bool): If True, enable console logging.
+    """
     setup_logging(log_level, log_file, console)
 
     model = load_model(model_path)
