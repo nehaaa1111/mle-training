@@ -1,6 +1,7 @@
 """
 This module contains helper functions for ingestion of data.
-Running this standalone downloads the housing data and stores preprocessed copies of it in the specified folders.
+Running this standalone downloads the housing data and stores
+ preprocessed copies of it in the specified folders.
 """
 import os
 import tarfile
@@ -9,11 +10,10 @@ from logging import Logger
 
 import numpy as np
 import pandas as pd
+from house_pricing.logger import configure_logger
 from six.moves import urllib
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedShuffleSplit
-
-from house_pricing.logger import configure_logger
 
 
 def parse_args() -> Namespace:
@@ -112,7 +112,8 @@ def pre_process_data(
     -------
     tuple[pd.DataFrame, SimpleImputer]
         Index 0 is the preprocessed dataframe.
-        Index 1 is the SimpleImputer passed or fit on the dataframe if None is passed.
+        Index 1 is the SimpleImputer passed or
+        fit on the dataframe if None is passed.
     """
     df = pd.get_dummies(df, columns=["ocean_proximity"])
 

@@ -2,18 +2,14 @@ import os
 import unittest
 
 import pandas as pd
-
 from PricePrediction import ingest_data
-
-import os
-import unittest
-
 
 """
 Unit tests for the PricePrediction package.
 
-This module contains unit tests for the functions in the `ingest_data` module 
-of the PricePrediction package, specifically testing data loading and preprocessing 
+This module contains unit tests for the functions in the `ingest_data` module
+of the PricePrediction package, specifically
+testing data loading and preprocessing
 functionalities.
 
 Classes
@@ -26,9 +22,11 @@ Methods
 setUp()
     Sets up the test data for testing the preprocessing functionality.
 test_load_housing_data()
-    Tests the loading of housing data from a CSV file using the `load_housing_data` function.
+    Tests the loading of housing data from a CSV file 
+    using the `load_housing_data` function.
 test_preprocess_data()
-    Tests the preprocessing of housing data using the `preprocess_data` function.
+    Tests the preprocessing of housing data using the 
+    `preprocess_data` function.
 """
 
 
