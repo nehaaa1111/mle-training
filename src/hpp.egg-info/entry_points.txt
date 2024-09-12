@@ -1,0 +1,2 @@
+[console_scripts]
+hpp = src.ingest_data:main
