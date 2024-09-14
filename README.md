@@ -57,3 +57,4 @@ python src/your_package/train.py --input ./data --output ./artifacts
 python src/your_package/score.py --model ./artifacts --data ./data --output ./results
 
 
+# mlflow-hands-on
